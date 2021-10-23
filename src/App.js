@@ -1,28 +1,24 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
 import logo from './logo.png';
+
 
 function App() {
   return (
-    <div className="h-screen flex justify-center items-center">
-    <div className="max-w-sm rounded overflow-hidden shadow-lg p-4">
-      <img className="w-full" src={logo} alt="Sunset in the mountains" />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2"> React-Tailwind </div>
-        <p className="text-gray-700 text-base">
-          A React Starter with Tailwind CSS
-        </p>
+    <div className='flex flex-col h-screen'>
+      <div className="app__title bg-blue-500 text-white p-3 shadow-md">
+        Secure Mesaging
       </div>
-      <div className="px-6 py-4">
-        {["React", "Tailwind"].map(tag =>
-              <span
-                key={tag}
-                className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2">
-                {"#" + tag }
-              </span>
-        )}
+      <div className="app_content">
+
       </div>
     </div>
-  </div>
   );
 }
 
