@@ -1,10 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function Contacts({ contact_list }) {
+function Contacts({ contact_list, setUpChat }) {
 
     const showContactsList = (list) => {
         return (list.length) ? list.map(contactHtml) : showNoContacts()
 
+    }
+
+    const loadChat = (receiver) => {
+        console.log('loading chat for ', receiver)
+        setUpChat(receiver)
     }
 
     const showNoContacts = () => {
@@ -15,14 +21,16 @@ function Contacts({ contact_list }) {
         )
     }
 
-    const contactHtml = (contact,key) => {
+    const contactHtml = (contact, key) => {
         return (
-            <div className='flex' key={key}>
-                <span className="contact__avatar w-1/3">
-                    <img src={contact.url} alt={contact.name} />
-                </span>
-                <h2 className='ml-2'>{contact.name}</h2>
-            </div>
+            <Link to='/chat'  key={key}>
+                <div className='flex' onClick={() => loadChat(contact)}>
+                    <span className="contact__avatar w-1/3">
+                        <img src={contact.url} alt={contact.name} />
+                    </span>
+                    <h2 className='ml-2'>{contact.name}</h2>
+                </div>
+            </Link>
         )
     }
     return (

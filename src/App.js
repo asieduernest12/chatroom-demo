@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,10 +8,26 @@ import {
 import Contacts from './components/Contacts';
 import About from './components/About';
 
-import logo from './logo.png';
+// import logo from './logo.png';
+import Chats from './components/Chats';
 
 
 function App() {
+
+  const [receiver, setReceiver] = useState({ name: 'Bob' })
+  const [sender, setSender] = useState({ name: 'Alice' })
+  const [messages, setMessages] = useState([])
+
+
+  const setUpChat = (receiver) => {
+    console.log('app.js setupChat')
+    setReceiver(receiver)
+
+  }
+
+  const addNewMessage = msg => {
+    setMessages([...messages, msg])
+  }
 
   const contacts = [
     {
@@ -23,6 +39,7 @@ function App() {
       url: 'https://media.gettyimages.com/photos/google-cofounder-and-ceo-larry-page-speaks-during-a-news-conference-picture-id144948917?s=2048x2048',
     }
   ]
+
   return (
     <div className='flex flex-col h-screen'>
       <Router>
@@ -45,18 +62,24 @@ function App() {
               <li><Link to='/'>Home</Link></li>
               <li><Link to='/contacts' >Contacts</Link></li>
               <li><Link to='/about' >About</Link></li>
-
+              {messages.length}
             </ul>
           </nav>
         </div>
         <div className="app_content h-full">
           <Switch>
             <Route path='/contacts'>
-              <Contacts contact_list={contacts} />
+              <Contacts contact_list={contacts} setUpChat={setUpChat} />
             </Route>
             <Route path='/about' component={About} />
+            <Route path='/chat'>
+              <Chats {...{ receiver, sender, messages: messages.filter(msg => (msg.sender.name === sender.name && msg.receiver.name === receiver.name) || (msg.sender.name === receiver.name && msg.receiver.name === sender.name)) }} sendMessage={addNewMessage}></Chats>
+            </Route>
             <Route path="/">
               <div> Welcome home</div>
+              <label htmlFor="">
+                Sender name <input type="text" onChange={(event) => setSender({ name: event.target.value })} value={sender.name} />
+              </label>
             </Route>
           </Switch>
         </div>
