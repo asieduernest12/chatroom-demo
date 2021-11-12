@@ -23,12 +23,19 @@ function Contacts({ contact_list, setUpChat }) {
 
     const contactHtml = (contact, key) => {
         return (
-            <Link to='/chat'  key={key}>
-                <div className='flex' onClick={() => loadChat(contact)}>
-                    <span className="contact__avatar w-1/3">
-                        <img src={contact.url} alt={contact.name} />
-                    </span>
-                    <h2 className='ml-2'>{contact.name}</h2>
+            <Link to='/chat' key={key}>
+                <div className='flex border-black' onClick={() => loadChat(contact)}>
+                    <div className="contact__avatar ml-3 mr-3">
+                        <img src={contact.url} alt={contact.name} className='rounded-full h-20 w-20'/>
+                    </div>
+                    <div className="contact__content">
+                        <h2 className='ml-2 message__title text-left'>{contact.name}</h2>
+                        <p className='message__peak text-left'>Lorem ipsum dolor sit amet.</p>
+                    </div>
+                    <div className="contact__stats flex flex-col">
+                        <span className="message__time text-right"> 12:01 AM</span>
+                        <span className="message__count text-right">41</span>
+                    </div>
                 </div>
             </Link>
         )
