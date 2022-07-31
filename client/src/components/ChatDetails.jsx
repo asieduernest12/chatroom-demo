@@ -21,8 +21,8 @@ function ChatDetails() {
 	const fetchMessages = async (room_id) => {
 		const res = axios.get('api/messages/room/' + room_id).then((res) => res.data);
 		setMessages((oldMessages) => {
-			const docs = (res?.['rows'] ?? []).map(({ doc }) => doc);
-			let tempSet = new Set(...(oldMessages ?? []), ...docs);
+			// const docs = (res?.['rows'] ?? []).map(({ doc }) => doc);
+			let tempSet = new Set(...(oldMessages ?? []), ...res);
 			return [...tempSet];
 		});
 	};

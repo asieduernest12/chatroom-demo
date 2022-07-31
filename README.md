@@ -6,6 +6,6 @@
 
 3. run `npm i`
 
-4. run `cp client/ && npm i`
+4. run `cd client/ && npm i`
 
 5. cd to the project root and run `npm run dev`

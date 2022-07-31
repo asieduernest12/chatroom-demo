@@ -18,7 +18,9 @@ router.get('/room/:room_id', async (req, res, next) => {
 
 	console.dir({ room_id, query });
 
-	const data = await nano.db.use('rooms').find(JSON.parse(JSON.stringify(query)));
+	// const data = await nano.db.use('rooms').find(JSON.parse(JSON.stringify(query)));
+	const data = await nano.db.use('messages').list({ include_docs: true });
+	const response = data.rows.map(({ doc }) => doc).filter((doc) => doc.room_id === room_id);
 	res.json(data);
 });
 
