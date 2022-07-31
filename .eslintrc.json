@@ -11,5 +11,6 @@
 	// },
 	// "plugins": [],
 	// "rules": {},
-	"ignorePatterns": ["client/**/*/*.*","node_modules/*"]
+	"ignorePatterns": ["./client/","./node_modules/"],
+	"root": true
 }

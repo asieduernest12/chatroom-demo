@@ -18,7 +18,8 @@
     "temp",
     "bower_components",
     ".npm",
-    ".yarn"
+    ".yarn",
+    "./client"
   ],
   "typeAcquisition": {
     "enable": true

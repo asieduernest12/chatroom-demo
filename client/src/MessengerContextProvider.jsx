@@ -34,15 +34,16 @@ export function MessengerContextProvider({ children }) {
 
 	const store = useMemo(
 		() => ({
-			state,
+			contextState: state,
 			updateStore,
 			setGuest,
 			setHost,
 			removeFromStore,
 			sendMessage,
 		}),
-		[]
+		[state]
 	);
+	// const store =
 
 	return <MessengerContext.Provider value={store}>{children}</MessengerContext.Provider>;
 }

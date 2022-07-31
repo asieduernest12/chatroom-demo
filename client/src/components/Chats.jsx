@@ -6,7 +6,7 @@ function Chats() {
 	const [rooms, setRooms] = useState(null);
 
 	const fetchRooms = async () => {
-		let res = await axios.get('/api/rooms').then((res) => res.data);
+		const res = await axios.get('/api/rooms').then((_res) => _res.data);
 		console.log(res);
 		setRooms(res.rows.map(({ doc }) => doc));
 	};

@@ -1,8 +1,8 @@
-type User = { id: string; username: string };
+type User = { id?: string; username: string };
 
 type Message = {
 	message: string;
-	destination_room_id: string;
+	destination_roomID: string;
 	host_username: string;
 	guest_username?: string;
 };
@@ -16,7 +16,7 @@ type Room = {
 type MessengerState = {
 	guest: User;
 	host: User;
-	room_id: string;
+	roomID: string;
 	messages: Message[];
 	[key: string]: any;
 	rooms: Room[];

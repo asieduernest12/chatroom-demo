@@ -1,61 +1,70 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { MessengerContext } from '../MessengerContextProvider';
 
 function ChatDetails() {
 	const MESSAGE_INTERVAL_TIME = 15_000;
 
-	// /** @type {MessengerContextValue} */
-	// const { contextState, sendMessage } = useContext(MessengerContext);
+	/** @type {MessengerContextValue} */
+	const { contextState } = useContext(MessengerContext);
+
+	const navigate = useNavigate();
+
+	console.log({ contextState });
+	const host = contextState?.host;
 
 	const [messages, setMessages] = useState(null);
 
 	const location = useLocation();
 
-	const guest = /** @type {User} */ (location.state); //roomid
-	const { room_id } = useParams();
+	const guest = /** @type {User} */ (location.state); // roomid
+	const { roomID } = useParams();
 
 	const [members, setMembers] = useState([]);
 
-	const fetchMessages = async (room_id) => {
-		console.log('fetching messages for room: ', room_id);
-		const res = axios.get('api/messages/room/' + room_id).then((res) => res.data);
-		setMessages((oldMessages) => {
-			const docs = (res?.['rows'] ?? []).map(({ doc }) => doc);
-			let tempSet = new Set(...(oldMessages ?? []), ...docs);
-			console.log('new messages: ', tempSet,docs);
-			return [...tempSet];
-		});
+	const fetchMessages = async (_roomID = roomID) => {
+		console.log('fetching messages for room: ', _roomID);
+		const res = await axios.get(`api/messages/room/${_roomID}`).then((_res) => _res.data);
+		const docs = (res?.rows ?? []).map(({ doc }) => doc);
+		setMessages(docs);
 	};
 
-	const fetchMembers = (roomId) => {
-		// return
-	};
+	// const fetchMembers = (roomId) => {
+	// 	// return
+	// };
+
+	useEffect(() => {
+		if (!contextState?.host) {
+			alert('Error: You must set a username');
+			navigate('/');
+		}
+	}, []);
 
 	useEffect(() => {
 		setMembers([]);
 
-		if (!room_id) return;
+		if (!roomID) return;
 
-		console.log('room_id', room_id, location);
+		console.log('roomID', roomID, location);
 
-		fetchMessages(room_id);
+		fetchMessages(roomID);
 
 		const fetchMessagesInterval = setInterval(async () => {
 			try {
-				await fetchMessages(room_id);
+				await fetchMessages(roomID);
 			} catch (error) {
 				clearInterval(fetchMessagesInterval);
 				throw alert('Error: unable to fetch messages');
 			}
 		}, MESSAGE_INTERVAL_TIME);
 
-		return () => {
+		// eslint-disable-next-line consistent-return
+		return function () {
 			console.log('clearing interval');
 			clearInterval(fetchMessagesInterval);
 		};
-	}, [room_id]);
+	}, [roomID]);
 
 	const makeMemberElement = (contact, key) => (
 		<Link to={contact.name} state={contact} key={key} className='mt-3'>
@@ -83,11 +92,14 @@ function ChatDetails() {
 
 	const msgToHtml = (msg, key) => {
 		let classes = 'chat__message bg-pink-300 p-2 mb-2';
-		classes += msg.guest.username === guest.username ? ' ml-auto  border-r-8' : '  border-l-8';
+		classes += msg.username === host.username ? ' ml-auto  border-r-8' : ' mr-auto  border-l-8';
 
 		return (
-			<div className='chat__row flex' key={key}>
-				<div className={classes}>{msg.message}</div>
+			<div className='chat__row  [  flex ] [ ]' key={key} sender={msg.sender_id}>
+				<div className='msg-card [ flex flex-col ] [  ]'>
+					<div className={classes}>{msg.message}</div>
+					<span className='text-sm'>{msg.sendername}</span>
+				</div>
 			</div>
 		);
 	};
@@ -96,12 +108,15 @@ function ChatDetails() {
 
 	const sendMessage = async () => {
 		try {
-			const responsez = await axios.post('/api/messages', {
+			const newMessage = {
 				message: msgText,
 				sender_id: '',
-				room_id,
-			});
-			fetchMessages(room_id);
+				room_id: roomID,
+				sendername: host?.username,
+			};
+
+			await axios.post('/api/messages', { new_message: newMessage });
+			fetchMessages(roomID);
 			setMsgText('');
 		} catch (error) {
 			alert('Error: sending new message');
@@ -111,18 +126,13 @@ function ChatDetails() {
 	return (
 		<div className='chat-details [ flex ] [ w-full ]'>
 			<div className='chats [ flex flex-col ] [ h-full p-3 w-2/3 ]'>
-				<div className='chats__header w-full'>
-					{'host here'} {messages?.length ?? 0}
-				</div>
+				<div className='chats__header w-full'>host here {messages?.length ?? 0}</div>
 
 				<div className='chats__messages'>{showMessages(messages)}</div>
 
-				<div className='chats__footer flex mt-auto'>
-					{/* <button className='chats__send_btn bg-blue-500 hidden' onClick={reverseSend} type='button'>
-					Send from {host?.username}
-				</button> */}
-					<input type='text' placeholder='message' onChange={(event) => setMsgText(event.target.value)} value={msgText} />
-					<button className='chats__send_btn bg-orange-500' onClick={sendMessage} type='button'>
+				<div className='chats__footer [ flex mt-auto ]'>
+					<input type='text' className=" [ ]  [ w-3/4 ]" placeholder='message' onChange={(event) => setMsgText(event.target.value)} value={msgText} />
+					<button className='chats__send_btn [ bg-orange-500 p-3 ]' onClick={sendMessage} type='button'>
 						Send {guest?.username}
 					</button>
 				</div>

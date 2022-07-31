@@ -25,13 +25,13 @@ router.get('/room/:room_id', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-	const { message, sender_id, room_id } = req.body;
+	const { new_message } = req.body;
 
 	const {
 		uuids: [_id],
 	} = await nano.uuids();
 
-	const data = await nano.db.use('messages').insert({ message, room_id, sender_id, _id });
+	const data = await nano.db.use('messages').insert({  _id, ...new_message });
 
 	res.json(data);
 });
