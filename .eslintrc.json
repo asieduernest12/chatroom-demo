@@ -3,13 +3,13 @@
 		"es2021": true,
         "node": true
 	},
-	"extends": ["airbnb", "prettier"],
-	"parserOptions": {
-		"ecmaFeatures": {},
-		"ecmaVersion": "latest",
-		"sourceType": "module"
-	},
-	"plugins": [],
-	"rules": {},
+	// "extends": ["airbnb", "prettier"],
+	// "parserOptions": {
+	// 	"ecmaFeatures": {},
+	// 	"ecmaVersion": "latest",
+	// 	"sourceType": "module"
+	// },
+	// "plugins": [],
+	// "rules": {},
 	"ignorePatterns": ["client/**/*/*.*","node_modules/*"]
 }
