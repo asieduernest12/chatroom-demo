@@ -2,7 +2,7 @@ import './index.css';
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import App from './App';
 import { MessengerContextProvider } from './MessengerContextProvider';
 import * as serviceWorker from './serviceWorker';
@@ -10,11 +10,11 @@ import * as serviceWorker from './serviceWorker';
 const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
-  <BrowserRouter>
+  <Router>
     <MessengerContextProvider>
       <App />
     </MessengerContextProvider>
-  </BrowserRouter>,
+  </Router>,
 );
 
 // If you want your app to work offline and load faster, you can change

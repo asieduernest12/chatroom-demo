@@ -1,16 +1,26 @@
 {
-  "name": "satya",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
-  "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1"
-  }
+	"name": "satya",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"start": "node ./bin/www",
+		"server": "npx nodemon -x \"cross-env DEBUG=chatroom:* node ./bin/www\" -w app.js -w routes/ -w bin/ -w package.json",
+    "client": "cd client && npm start",
+    "dev": "npx concurrently --kill-others \"npm run server\" \"npm run client\""
+	},
+	"dependencies": {
+		"cookie-parser": "~1.4.4",
+		"debug": "~2.6.9",
+		"express": "~4.16.1",
+		"http-errors": "~1.6.3",
+		"jade": "~1.11.0",
+		"morgan": "~1.9.1",
+		"nano": "^10.0.0"
+	},
+	"devDependencies": {
+		"cross-env": "^7.0.3",
+    "eslint-config-airbnb": "^19.0.4",
+		"eslint-config-prettier": "^8.5.0",
+    "prettier-eslint": "^15.0.1"
+	}
 }

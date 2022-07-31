@@ -41,7 +41,7 @@ function App() {
 						<li>
 							<NavLink to='/about'>About</NavLink>
 						</li>
-						{contextState?.messages.length}
+						
 					</ul>
 				</nav>
 			</div>

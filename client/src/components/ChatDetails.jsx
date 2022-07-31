@@ -1,17 +1,60 @@
+import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { MessengerContext } from '../MessengerContextProvider';
 
 function ChatDetails() {
-	/** @type {MessengerContextValue} */
-	const { contextState, sendMessage } = useContext(MessengerContext);
+	const MESSAGE_INTERVAL_TIME = 15_000;
 
-	const guest = /** @type {User} */ (useLocation().state);
+	// /** @type {MessengerContextValue} */
+	// const { contextState, sendMessage } = useContext(MessengerContext);
+
+	const [messages, setMessages] = useState(null);
+
+	const location = useLocation();
+
+	const guest = /** @type {User} */ (location.state); //roomid
+	const { room_id } = useParams();
 
 	const [members, setMembers] = useState([]);
 
+	const fetchMessages = async (room_id) => {
+		const res = axios.get('api/messages/room/' + room_id).then((res) => res.data);
+		setMessages((oldMessages) => {
+			const docs = (res?.['rows'] ?? []).map(({ doc }) => doc);
+			let tempSet = new Set(...(oldMessages ?? []), ...docs);
+			return [...tempSet];
+		});
+	};
+
+	const fetchMembers = (roomId) => {
+		// return
+	};
+
 	useEffect(() => {
 		setMembers([]);
+
+		if (!room_id) return;
+
+		console.log('room_id', room_id, location);
+
+		fetchMessages(room_id);
+
+		const fetchMessagesInterval = setInterval(async () => {
+			try {
+				await fetchMessages();
+			} catch (error) {
+				if (!res?.['rows']) {
+					clearInterval(fetchMessagesInterval);
+					throw alert('Error: unable to fetch messages');
+				}
+			}
+		}, MESSAGE_INTERVAL_TIME);
+
+		return () => {
+			console.log('clearing interval');
+			clearInterval(fetchMessagesInterval);
+		};
 	}, []);
 
 	const makeMemberElement = (contact, key) => (
@@ -36,13 +79,13 @@ function ChatDetails() {
 
 	const showMembers = (list) => (list.length ? list.map(makeMemberElement) : showNoContacts());
 
-	const host = contextState?.host;
+	// const host = contextState?.host;
 
-	const messageFilter = (msg) =>
-		(msg.guest.username === guest?.username && msg.host.username === host?.username) ||
-		(msg.guest.username === host?.username && msg.host.username === guest?.username);
+	// const messageFilter = (msg) =>
+	// 	(msg.guest.username === guest?.username && msg.host.username === host?.username) ||
+	// 	(msg.guest.username === host?.username && msg.host.username === guest?.username);
 
-	const messages = (contextState?.messages ?? []).filter(messageFilter);
+	// const messages = (contextState?.messages ?? []).filter(messageFilter);
 
 	// console.log({ state,context });
 	const [msgText, setMsgText] = useState('');
@@ -58,7 +101,7 @@ function ChatDetails() {
 		);
 	};
 
-	const showMessages = (msgs) => msgs.map(msgToHtml);
+	const showMessages = (msgs) => msgs && msgs.map(msgToHtml);
 
 	const forwardSend = () => {
 		sendMessage({
@@ -74,7 +117,7 @@ function ChatDetails() {
 		<div className='chat-details [ flex ] [ w-full ]'>
 			<div className='chats [ flex flex-col ] [ h-full p-3 w-2/3 ]'>
 				<div className='chats__header w-full'>
-					{host?.username} {messages.length}
+					{"host here"} {messages?.length ?? 0}
 				</div>
 
 				<div className='chats__messages'>{showMessages(messages)}</div>
