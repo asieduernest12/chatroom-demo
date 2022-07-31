@@ -7,8 +7,7 @@
 		"start": "node ./bin/www",
 		"server": "npx nodemon -x \"cross-env  DEBUG=chatroom:* node ./bin/www\" -w app.js -w routes/ -w bin/ -w package.json",
 		"client": "cd client && npm start",
-		"dev": "npx concurrently --kill-others \"npm run server\" \"npm run client\"",
-		"heroku-postbuild": "cd client && npm i && npm run build"
+		"dev": "npx concurrently --kill-others \"npm run server\" \"npm run client\""
 	},
 	"dependencies": {
 		"cookie-parser": "~1.4.4",
