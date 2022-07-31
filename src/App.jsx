@@ -10,39 +10,8 @@ import { MessengerContext } from './MessengerContextProvider';
 
 function App() {
 	const { contextState } = /** @type {MessengerContextValue} */ (useContext(/** @type {any} */ (MessengerContext)));
-	// setReceiver({ name: "Alice" });
-	// const [sender, setSender] = useState();
+	
 
-	// updateStore("messages", []);
-	// const [messages, setMessages] = useState([]);
-
-	// const setUpChat = (receiver) => {
-	// 	console.log("app.js setupChat");
-	// 	setReceiver(receiver);
-	// };
-
-	// const addNewMessage = (msg) => {
-	// 	// setMessages([...messages, msg]);
-	// 	updateStore("messages", [...contextState?.messages, msg]);
-	// };
-
-	// updateStore("messages", []);
-	// useEffect(() => {
-	// 	if (contextState?.messages?.length >= 0) {
-	// 		return;
-	// 	}
-	// }, [contextState, updateStore]);
-
-	const contacts = [
-		{
-			url: 'https://camerajabber.com/wp-content/uploads/2021/10/001_17-1410x793.jpg',
-			name: 'dji ronin',
-		},
-		{
-			name: 'larry page',
-			url: 'https://media.gettyimages.com/photos/google-cofounder-and-ceo-larry-page-speaks-during-a-news-conference-picture-id144948917?s=2048x2048',
-		},
-	];
 
 	return (
 		<div className='flex flex-col h-screen'>
@@ -80,8 +49,8 @@ function App() {
 				<Routes>
 					<Route path='/home' element={<Welcome />} />
 					<Route path='/about' element={<About />} />
-					<Route path='/chats' element={<Chats contact_list={contacts} />}>
-						<Route path=':name' element={<ChatDetails />} />
+					<Route path='/chats' element={<Chats/>}>
+						<Route path='room/:room_id' element={<ChatDetails />} />
 					</Route>
 					<Route path='*' element={<Navigate to='/home' />} />
 				</Routes>

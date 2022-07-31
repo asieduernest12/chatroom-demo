@@ -35,7 +35,7 @@ function ChatDetails() {
 	const showNoContacts = () => <div>Your contacts is empty</div>;
 
 	const showMembers = (list) => (list.length ? list.map(makeMemberElement) : showNoContacts());
-	
+
 	const host = contextState?.host;
 
 	const messageFilter = (msg) =>
@@ -71,8 +71,8 @@ function ChatDetails() {
 	};
 
 	return (
-		<div className='chat-details [ flex ]'>
-			<div className='chats flex flex-col h-full p-3'>
+		<div className='chat-details [ flex ] [ w-full ]'>
+			<div className='chats [ flex flex-col ] [ h-full p-3 w-2/3 ]'>
 				<div className='chats__header w-full'>
 					{host?.username} {messages.length}
 				</div>
@@ -90,7 +90,7 @@ function ChatDetails() {
 				</div>
 			</div>
 
-			<div className='contacts__content [ flex-col gap-3 ] [ w-[2/7] ]'>
+			<div className='contacts__content [ flex-col gap-3 ] [ w-1/3 ]'>
 				<h2 className='mb-3 mt-6'>Members Online</h2>
 				{showMembers(members)}
 			</div>

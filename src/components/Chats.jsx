@@ -1,28 +1,18 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 
 function Chats() {
-	// const loadChat = (receiver) => {
-	// 	console.log("loading chat for ", receiver);
-	// 	setUpChat(receiver);
-	// };
-
 	return (
-		<div className='chats-page [ flex justify-between ] [ w-full bg-orange-500 ]'>
-			<div className='chat-rooms [ flex flex-col ] [ w-[2/7] p-5 ] '>
-				<ul>
-					<h2>Chat rooms</h2>
-					<li>
-						<span className='chat-rooms-item label'>room x</span>
-						<button className='chat-join-open-btn [  ] [ p-3 bg-green-500 ]' type='button'>
-							Join
-						</button>
-					</li>
-					<li>room y</li>
-				</ul>
+		<div className='chats-page [ flex flex-row ] [ w-full bg-orange-500 ]'>
+			<div className='chat-rooms [ flex flex-col gap-5 ] [ w-1/4 p-5 ] '>
+				<h2>Chat rooms</h2>
+
+				<NavLink className='chat-join-open-btn [  ] [ p-3 bg-green-500 ]' to={`room/${1}`}>
+					Room 1
+				</NavLink>
 			</div>
 
-			<div className='chat_details_container [  ] [ w-[3/7] ]'>
+			<div className='chat_details_container [  ] [ w-3/4 ]'>
 				<Outlet>
 					<span>Nothing has been defined</span>
 				</Outlet>
