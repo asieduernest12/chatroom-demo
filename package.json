@@ -1,60 +1,64 @@
 {
-  "name": "react-tailwind-starter",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/dom": "^8.16.0",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^14.3.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-proptypes": "^1.0.0",
-    "react-router-dom": "^6.3.0",
-    "react-scripts": "^5.0.1",
-    "tailwindcss": "^3.1.6",
-    "typescript": "^4.7.4"
-  },
-  "scripts": {
-    "purge:css": "cross-env NODE_ENV=production postcss src/tailwind.css -o src/index.css",
-    "build:css": "postcss src/tailwind.css -o src/index.css",
-    "watch:css": "postcss src/tailwind.css -o src/index.css -w",
-    "start": "npm run build:css && react-scripts start",
-    "build": "npm run purge:css && react-scripts build",
-    "types:gen": "jsdoc -t node_modules/tsd-jsdoc/dist -r src -d .",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.7",
-    "cross-env": "^7.0.3",
-    "cssnano": "^5.1.12",
-    "eslint": "^8.20.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-react": "^7.30.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "jsdoc": "^3.6.11",
-    "postcss-cli": "^10.0.0",
-    "prettier-eslint": "^15.0.1",
-    "tsd-jsdoc": "^2.5.0"
-  },
-  "types": "types.d.ts"
+	"name": "react-tailwind-starter",
+	"version": "0.1.0",
+	"private": true,
+  "homepage": "https://github.com/asieduernest12/chatroom-demo",
+	"dependencies": {
+		"@testing-library/dom": "^8.16.0",
+		"@testing-library/jest-dom": "^5.16.4",
+		"@testing-library/react": "^13.3.0",
+		"@testing-library/user-event": "^14.3.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-proptypes": "^1.0.0",
+		"react-router-dom": "^6.3.0",
+		"react-scripts": "^5.0.1",
+		"tailwindcss": "^3.1.6",
+		"typescript": "^4.7.4"
+	},
+	"scripts": {
+		"purge:css": "cross-env NODE_ENV=production postcss src/tailwind.css -o src/index.css",
+		"build:css": "postcss src/tailwind.css -o src/index.css",
+		"watch:css": "postcss src/tailwind.css -o src/index.css -w",
+		"start": "npm run build:css && react-scripts start",
+		"build": "npm run purge:css && react-scripts build",
+		"types:gen": "jsdoc -t node_modules/tsd-jsdoc/dist -r src -d .",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"autoprefixer": "^10.4.7",
+		"cross-env": "^7.0.3",
+		"cssnano": "^5.1.12",
+		"eslint": "^8.20.0",
+		"eslint-config-airbnb": "^19.0.4",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-jsx-a11y": "^6.6.1",
+		"eslint-plugin-react": "^7.30.1",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"jsdoc": "^3.6.11",
+		"postcss-cli": "^10.0.0",
+		"prettier-eslint": "^15.0.1",
+		"gh-pages": "^4.0.0",
+		"tsd-jsdoc": "^2.5.0"
+	},
+	"types": "types.d.ts"
 }
