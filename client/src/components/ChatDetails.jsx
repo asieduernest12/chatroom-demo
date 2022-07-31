@@ -19,10 +19,12 @@ function ChatDetails() {
 	const [members, setMembers] = useState([]);
 
 	const fetchMessages = async (room_id) => {
+		console.log('fetching messages for room: ', room_id);
 		const res = axios.get('api/messages/room/' + room_id).then((res) => res.data);
 		setMessages((oldMessages) => {
-			// const docs = (res?.['rows'] ?? []).map(({ doc }) => doc);
-			let tempSet = new Set(...(oldMessages ?? []), ...res);
+			const docs = (res?.['rows'] ?? []).map(({ doc }) => doc);
+			let tempSet = new Set(...(oldMessages ?? []), ...docs);
+			console.log('new messages: ', tempSet,docs);
 			return [...tempSet];
 		});
 	};
@@ -42,12 +44,10 @@ function ChatDetails() {
 
 		const fetchMessagesInterval = setInterval(async () => {
 			try {
-				await fetchMessages();
+				await fetchMessages(room_id);
 			} catch (error) {
-				if (!res?.['rows']) {
-					clearInterval(fetchMessagesInterval);
-					throw alert('Error: unable to fetch messages');
-				}
+				clearInterval(fetchMessagesInterval);
+				throw alert('Error: unable to fetch messages');
 			}
 		}, MESSAGE_INTERVAL_TIME);
 

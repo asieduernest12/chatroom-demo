@@ -9,3 +9,6 @@
 4. run `cd client/ && npm i`
 
 5. cd to the project root and run `npm run dev`
+
+#todo
+add migration code
