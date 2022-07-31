@@ -55,7 +55,7 @@ function ChatDetails() {
 			console.log('clearing interval');
 			clearInterval(fetchMessagesInterval);
 		};
-	}, []);
+	}, [room_id]);
 
 	const makeMemberElement = (contact, key) => (
 		<Link to={contact.name} state={contact} key={key} className='mt-3'>
@@ -79,15 +79,6 @@ function ChatDetails() {
 
 	const showMembers = (list) => (list.length ? list.map(makeMemberElement) : showNoContacts());
 
-	// const host = contextState?.host;
-
-	// const messageFilter = (msg) =>
-	// 	(msg.guest.username === guest?.username && msg.host.username === host?.username) ||
-	// 	(msg.guest.username === host?.username && msg.host.username === guest?.username);
-
-	// const messages = (contextState?.messages ?? []).filter(messageFilter);
-
-	// console.log({ state,context });
 	const [msgText, setMsgText] = useState('');
 
 	const msgToHtml = (msg, key) => {
@@ -103,21 +94,25 @@ function ChatDetails() {
 
 	const showMessages = (msgs) => msgs && msgs.map(msgToHtml);
 
-	const forwardSend = () => {
-		sendMessage({
-			message: msgText,
-			host_username: host.username,
-			guest_username: guest.username,
-			destination_room_id: '',
-		});
-		setMsgText('');
+	const sendMessage = async () => {
+		try {
+			const responsez = await axios.post('/api/messages', {
+				message: msgText,
+				sender_id: '',
+				room_id,
+			});
+			fetchMessages(room_id);
+			setMsgText('');
+		} catch (error) {
+			alert('Error: sending new message');
+		}
 	};
 
 	return (
 		<div className='chat-details [ flex ] [ w-full ]'>
 			<div className='chats [ flex flex-col ] [ h-full p-3 w-2/3 ]'>
 				<div className='chats__header w-full'>
-					{"host here"} {messages?.length ?? 0}
+					{'host here'} {messages?.length ?? 0}
 				</div>
 
 				<div className='chats__messages'>{showMessages(messages)}</div>
@@ -127,7 +122,7 @@ function ChatDetails() {
 					Send from {host?.username}
 				</button> */}
 					<input type='text' placeholder='message' onChange={(event) => setMsgText(event.target.value)} value={msgText} />
-					<button className='chats__send_btn bg-orange-500' onClick={forwardSend} type='button'>
+					<button className='chats__send_btn bg-orange-500' onClick={sendMessage} type='button'>
 						Send {guest?.username}
 					</button>
 				</div>

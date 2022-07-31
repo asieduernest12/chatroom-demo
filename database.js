@@ -1,3 +1,3 @@
-const nano = require('nano')('http://admin:kr@129.114.26.159:5984');
+const nano = require('nano')(process.env.DATABASE_URL);
 
 module.exports = nano;

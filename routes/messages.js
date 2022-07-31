@@ -6,14 +6,19 @@ const router = express.Router();
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
-	const data = await nano.db.use('rooms').list({ include_docs: true });
+	const data = await nano.db.use('messages').list({ include_docs: true });
 	res.json(data);
 });
 
 router.get('/room/:room_id', async (req, res, next) => {
-	//fetch the messages for this room
+	// fetch the messages for this room
 
-	const data = await nano.db.use('rooms').find({ selector: { room_id: { $eq: req.params.room_id } } });
+	const { room_id } = req.params;
+	const query = { selector: { room_id: room_id } };
+
+	console.dir({ room_id, query });
+
+	const data = await nano.db.use('rooms').find(JSON.parse(JSON.stringify(query)));
 	res.json(data);
 });
 
