@@ -22,7 +22,7 @@
 		"purge:css": "cross-env NODE_ENV=production postcss src/tailwind.css -o src/index.css",
 		"build:css": "postcss src/tailwind.css -o src/index.css",
 		"watch:css": "postcss src/tailwind.css -o src/index.css -w",
-		"start": "npm run build:css && PORT=3001 react-scripts start",
+		"start": "npm run build:css && cross-env PORT=3001 react-scripts start",
 		"build": "npm run purge:css && react-scripts build",
 		"types:gen": "jsdoc -t node_modules/tsd-jsdoc/dist -r src -d .",
 		"predeploy": "npm run build",
