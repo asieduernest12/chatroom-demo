@@ -2,7 +2,7 @@
 	"name": "react-tailwind-starter",
 	"version": "0.1.0",
 	"private": true,
-  "homepage": "https://asieduernest12.github.io/chatroom-demo",
+  "homepage": ".",
 	"dependencies": {
 		"@testing-library/dom": "^8.16.0",
 		"@testing-library/jest-dom": "^5.16.4",
