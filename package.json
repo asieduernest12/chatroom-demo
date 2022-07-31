@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^14.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-proptypes": "^1.0.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
     "tailwindcss": "^3.1.6",
@@ -20,6 +21,7 @@
     "watch:css": "postcss src/tailwind.css -o src/index.css -w",
     "start": "npm run build:css && react-scripts start",
     "build": "npm run purge:css && react-scripts build",
+    "types:gen": "jsdoc -t node_modules/tsd-jsdoc/dist -r src -d .",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -44,10 +46,15 @@
     "cssnano": "^5.1.12",
     "eslint": "^8.20.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "postcss-cli": "^10.0.0"
-  }
+    "jsdoc": "^3.6.11",
+    "postcss-cli": "^10.0.0",
+    "prettier-eslint": "^15.0.1",
+    "tsd-jsdoc": "^2.5.0"
+  },
+  "types": "types.d.ts"
 }

@@ -1,38 +1,52 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useMemo, useState } from 'react';
+import reactProptypes from 'react-proptypes';
 
-export const MessengerContext = createContext();
+export const MessengerContext = /** @type {MessengerContextValue & import("react").Context}  */ (createContext({}));
 
 export function MessengerContextProvider({ children }) {
-	const [state, setState] = useState({});
+	const [state, setState] = useState(/** @type {MessengerState} */ ({}));
 
-	/** @global */
-	const updateStore = (key, value) => {
-		setState((oldState) => ({ ...oldState, [key]: value }));
-	};
-
-	// const filter = (/** @type {string} */ testKey) => (/** @type {string} */ key) => new RegExp(testKey, "i").test(key);
-
-	/** @global */
-	const removeFromStore = (/** @type {string} */ key) => {
+	const updateStore = (/** @type {string} */ key, /** @type {{}} */ value) => {
 		setState((oldState) => {
-			const oldMap = new Map(Object.entries(oldState));
-			oldMap.delete(key);
-			const newState = Object.fromEntries([...oldMap]);
-			return newState;
+			const newState = { ...oldState, [key]: value };
+			console.log({ oldState, newState });
+			return /** @type {MessengerState} */ (newState);
 		});
 	};
 
-	/** @global */
-	const setSender = (newSender) => updateStore("sender", newSender);
+	// const filter = (/** @type {string} */ testKey) =>
+	//   (/** @type {string} */ key) => new RegExp(testKey, "i").test(key);
 
-	/** @global */
-	const setReceiver = (newReceiver) => updateStore("receiver", newReceiver);
+	const removeFromStore = (/** @type {string} */ key) => {
+		setState((/** @type {any} */ oldState) => {
+			const oldMap = new Map(Object.entries(oldState));
+			oldMap.delete(key);
+			const newState = Object.fromEntries([...oldMap]);
+			return /** @type {MessengerState} */ (newState);
+		});
+	};
 
-	/** 
-	 * @global
-	 * @alias MessengerStoreInterface
-	 */
-	const store = { state, updateStore, setReceiver, setSender, removeFromStore };
+	const setHost = (/** @type {User} */ newSender) => updateStore('host', newSender);
+
+	const setGuest = (/** @type {User} */ newReceiver) => updateStore('guest', newReceiver);
+
+	const sendMessage = (/** @type {Message} */ newMessage) => updateStore('messages', [...(state?.messages ?? []), newMessage]);
+
+	const store = useMemo(
+		() => ({
+			state,
+			updateStore,
+			setGuest,
+			setHost,
+			removeFromStore,
+			sendMessage,
+		}),
+		[]
+	);
 
 	return <MessengerContext.Provider value={store}>{children}</MessengerContext.Provider>;
 }
+
+MessengerContextProvider.propTypes = {
+	children: reactProptypes.node.isRequired,
+};

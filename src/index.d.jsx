@@ -1,1 +1,0 @@
-/** @function {(key:string, value:any)=>} updateStore */
