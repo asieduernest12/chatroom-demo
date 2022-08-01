@@ -28,7 +28,7 @@
 		"start": "npm run build:css && cross-env PORT=3001 react-scripts start",
 		"build": "npm run purge:css && react-scripts build",
 		"types:gen": "jsdoc -t node_modules/tsd-jsdoc/dist -r src -d .",
-		"predeploy": "npm run build",
+		"predeploy": "cross-env PROXY=https://mudonlinechatroom.herokuapp.com/ npm run build",
 		"deploy": "gh-pages -d build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"

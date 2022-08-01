@@ -9,10 +9,9 @@ import Welcome from './components/Welcome';
 import Header from './Header';
 
 function App() {
-	
 	return (
 		<div className='flex flex-col h-screen'>
-			{Header()}
+			<Header />
 
 			<div className='app_content [  ] [ h-[85%] overflow-hidden bg-orange-200 w-full ]'>
 				<Routes>
