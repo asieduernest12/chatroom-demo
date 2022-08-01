@@ -39,7 +39,7 @@ function ChatDetails() {
 			alert('Error: You must set a username');
 			navigate('/');
 		}
-	}, []);
+	}, [contextState]);
 
 	useEffect(() => {
 		setMembers([]);
@@ -91,14 +91,13 @@ function ChatDetails() {
 	const [msgText, setMsgText] = useState('');
 
 	const msgToHtml = (msg, key) => {
-		let classes = 'chat__message bg-pink-300 p-2 mb-2';
-		classes += msg.username === host.username ? ' ml-auto  border-r-8' : ' mr-auto  border-l-8';
+		const placementStype = msg?.sendername === host.username ? ' ml-auto  border-r-8' : ' mr-auto  border-l-8';
 
 		return (
-			<div className='chat__row  [  flex ] [ ]' key={key} sender={msg.sender_id}>
-				<div className='msg-card [ flex flex-col ] [  ]'>
-					<div className={classes}>{msg.message}</div>
-					<span className='text-sm'>{msg.sendername}</span>
+			<div className='chat__message_row  [  flex ] [  ]' key={key} sender={msg?.sender_id}>
+				<div className={`chat__message [ flex flex-col ] [ bg-pink-200 ${placementStype} ]`}>
+					<div className="message_text p-2 ">{msg?.message ?? 'Error: no msg'}</div>
+					<span className='message_sender bg-pink-300 text-xs p-2 pt-0'>{msg?.sendername ?? 'No sender'}</span>
 				</div>
 			</div>
 		);
@@ -124,21 +123,21 @@ function ChatDetails() {
 	};
 
 	return (
-		<div className='chat-details [ flex ] [ w-full ]'>
-			<div className='chats [ flex flex-col ] [ h-full p-3 w-2/3 ]'>
-				<div className='chats__header w-full'>host here {messages?.length ?? 0}</div>
+		<div className='chat-details [ flex ] [ w-full h-full ]'>
+			<div className='chats [ flex flex-col gap-3 ] [ h-full p-3 w-2/3 ]'>
+				<div className='chats__header w-full h-[5%] '>host here {messages?.length ?? 0}</div>
 
-				<div className='chats__messages'>{showMessages(messages)}</div>
+				<div className='chats__messages [ flex flex-col gap-3 ] [ h-[85%] overflow-y-scroll ]'>{showMessages(messages)}</div>
 
-				<div className='chats__footer [ flex mt-auto ]'>
-					<input type='text' className=" [ ]  [ w-3/4 ]" placeholder='message' onChange={(event) => setMsgText(event.target.value)} value={msgText} />
-					<button className='chats__send_btn [ bg-orange-500 p-3 ]' onClick={sendMessage} type='button'>
+				<div className='chats__footer [ flex mt-auto ] [ h-[20%] ]'>
+					<input type='text' className=' [ ]  [ w-3/4 p-3 ]' placeholder='message' onChange={(event) => setMsgText(event.target.value)} value={msgText} />
+					<button className='chats__send_btn [ bg-blue-400 p-3 w-1/4 ]' onClick={sendMessage} type='button'>
 						Send {guest?.username}
 					</button>
 				</div>
 			</div>
 
-			<div className='contacts__content [ flex-col gap-3 ] [ w-1/3 ]'>
+			<div className='contacts__content [ flex-col gap-3 ] [ w-1/3 bg-blue-400 p-2 ]'>
 				<h2 className='mb-3 mt-6'>Members Online</h2>
 				{showMembers(members)}
 			</div>

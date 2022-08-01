@@ -1,9 +1,12 @@
 module.exports = {
-  important: true,
-  content: ["./src/**/*.html", "./src/**/*.jsx", "./src/**/*.js"],
-  theme: {
-    extend: {},
-  },
-  variants: {},
-  plugins: [],
+	important: true,
+	mode: 'jit',
+	purge: {
+		content: ['./src/**/*.html', './src/**/*.jsx', './src/**/*.js'],
+		options: { whitelistPatterns: [/^bg-/] },
+	},
+	theme: {
+		extend: {},
+	},
+	plugins: [],
 };

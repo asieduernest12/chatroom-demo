@@ -11,12 +11,14 @@ import { MessengerContext } from './MessengerContextProvider';
 function App() {
 	const { contextState } = /** @type {MessengerContextValue} */ (useContext(/** @type {any} */ (MessengerContext)));
 
-	const host = contextState?.host
+	const host = contextState?.host;
+
+	const setNavClassName = ({ isActive }) => `nav_link_item nav_home p-3 ${isActive && 'bg-blue-500'}`;
 	return (
 		<div className='flex flex-col h-screen'>
 			<div className='bg-blue-500 text-white shadow-md flex-col'>
 				<div className='title__bar flex justify-end p-3 pl-8'>
-					<Link to="/" replace className=' [ flex ] [ rounded-full hover:bg-green-500 ]' type='button'>
+					<Link to='/' replace className='back_btn [ flex ] [ rounded-full hover:bg-green-500 ]' type='button'>
 						<svg xmlns='http://www.w3.org/2000/svg' className='[ h-5 w-5 m-auto ]' viewBox='0 0 20 20' fill='currentColor'>
 							<path
 								fillRule='evenodd'
@@ -29,23 +31,29 @@ function App() {
 					</div> */}
 					<h2 className='app__title p-3 w-full'>Secure Mesaging</h2>
 
-					<span className="navigation_username [  ] [ ml-auto ]">{host?.username ?? 'No user'}</span>
+					<span className='navigation_username [  ] [ ml-auto ]'>{host?.username ?? 'No user'}</span>
 				</div>
-				<nav className='bg-blue-400 p-3 pl-8'>
-					<ul className='flex gap-2'>
+				<nav className='bg-blue-400 pl-8'>
+					<ul className='flex gap-2 p-3 h-full'>
 						<li>
-							<NavLink to='/'>Home</NavLink>
+							<NavLink className={setNavClassName} to='/home'>
+								Home
+							</NavLink>
 						</li>
 						<li>
-							<NavLink to='/chats'>Chats</NavLink>
+							<NavLink className={setNavClassName} to='/chats'>
+								Chats
+							</NavLink>
 						</li>
 						<li>
-							<NavLink to='/about'>About</NavLink>
+							<NavLink className={setNavClassName} to='/about'>
+								About
+							</NavLink>
 						</li>
 					</ul>
 				</nav>
 			</div>
-			<div className='app_content h-full'>
+			<div className='app_content h-full bg-orange-200'>
 				<Routes>
 					<Route path='/home' element={<Welcome />} />
 					<Route path='/about' element={<About />} />

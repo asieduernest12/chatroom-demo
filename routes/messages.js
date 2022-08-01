@@ -19,8 +19,8 @@ router.get('/room/:room_id', async (req, res, next) => {
 	console.dir({ room_id, query });
 
 	// const data = await nano.db.use('rooms').find(JSON.parse(JSON.stringify(query)));
-	const data = await nano.db.use('messages').list({ include_docs: true });
-	const response = data.rows.map(({ doc }) => doc).filter((doc) => doc.room_id === room_id);
+	const data = await nano.db.use('messages').list({ include_docs: true, limit: 20 });
+	data.rows = data.rows.filter(({doc}) => doc.room_id === room_id);
 	res.json(data);
 });
 
@@ -31,7 +31,7 @@ router.post('/', async (req, res, next) => {
 		uuids: [_id],
 	} = await nano.uuids();
 
-	const data = await nano.db.use('messages').insert({  _id, ...new_message });
+	const data = await nano.db.use('messages').insert({ _id, ...new_message });
 
 	res.json(data);
 });

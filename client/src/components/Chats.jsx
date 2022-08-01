@@ -11,24 +11,26 @@ function Chats() {
 		setRooms(res.rows.map(({ doc }) => doc));
 	};
 
+
+	const makeChatNameClassName = ({isActive}) => `chat_room_item_link [  ] [ p-3  ${isActive ? 'bg-orange-200': 'bg-blue-100'} ]`
 	useEffect(() => {
 		fetchRooms();
 	}, []);
 
 	return (
-		<div className='chats-page [ flex flex-row ] [ w-full bg-orange-500 ]'>
-			<div className='chat-rooms [ flex flex-col gap-5 ] [ w-1/4 p-5 ] '>
+		<div className='chats-page [ flex flex-row ] [ w-full h-full  md:px-[30rem] ]'>
+			<div className='chat-rooms [ flex flex-col gap-5 ] [ w-1/4 p-5 bg-orange-500 ] '>
 				<h2>Chat rooms</h2>
 
 				{rooms &&
 					rooms?.map(({ name, _id }) => (
-						<NavLink key={_id} className='chat-join-open-btn [  ] [ p-3 bg-green-500 ]' to={`room/${_id}`}>
+						<NavLink key={_id} className={makeChatNameClassName} to={`room/${_id}`}>
 							{name}
 						</NavLink>
 					))}
 			</div>
 
-			<div className='chat_details_container [  ] [ w-3/4 ]'>
+			<div className='chat_details_container [  ] [ w-3/4 bg-orange-300 ]'>
 				<Outlet>
 					<span>Nothing has been defined</span>
 				</Outlet>
