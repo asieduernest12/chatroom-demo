@@ -31,9 +31,7 @@ function Chats() {
 			</div>
 
 			<div className='chat_details_container [  ] [ w-3/4 bg-orange-300 ]'>
-				<Outlet>
-					<span>Nothing has been defined</span>
-				</Outlet>
+				<Outlet/>
 			</div>
 		</div>
 	);

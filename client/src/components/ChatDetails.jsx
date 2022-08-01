@@ -11,7 +11,7 @@ function ChatDetails() {
 
 	const navigate = useNavigate();
 
-	console.log({ contextState });
+
 	const host = contextState?.host;
 
 	const [messages, setMessages] = useState(null);
@@ -24,8 +24,7 @@ function ChatDetails() {
 	const [members, setMembers] = useState([]);
 
 	const fetchMessages = async (_roomID = roomID) => {
-		console.log('fetching messages for room: ', _roomID);
-		const res = await axios.get(`${process.env.REACT_APP_PROXY}/api/messages/room/${_roomID}`).then((_res) => _res.data);
+ 		const res = await axios.get(`${process.env.REACT_APP_PROXY}/api/messages/room/${_roomID}`).then((_res) => _res.data);
 		const docs = (res?.rows ?? []).map(({ doc }) => doc);
 		setMessages(docs);
 	};
@@ -46,8 +45,7 @@ function ChatDetails() {
 
 		if (!roomID) return;
 
-		console.log('roomID', roomID, location);
-
+ 
 		fetchMessages(roomID);
 
 		const fetchMessagesInterval = setInterval(async () => {
@@ -55,14 +53,13 @@ function ChatDetails() {
 				await fetchMessages(roomID);
 			} catch (error) {
 				clearInterval(fetchMessagesInterval);
-				throw alert('Error: unable to fetch messages');
+				throw Error('Error: unable to fetch messages');
 			}
 		}, MESSAGE_INTERVAL_TIME);
 
 		// eslint-disable-next-line consistent-return
-		return function () {
-			console.log('clearing interval');
-			clearInterval(fetchMessagesInterval);
+		return function cleanUp () {
+ 			clearInterval(fetchMessagesInterval);
 		};
 	}, [roomID]);
 
@@ -94,7 +91,7 @@ function ChatDetails() {
 		const placementStype = msg?.sendername === host.username ? ' ml-auto  border-r-8' : ' mr-auto  border-l-8';
 
 		return (
-			<div className='chat__message_row  [  flex ] [  ]' key={key} sender={msg?.sender_id}>
+			<div className='chat__message_row  [  flex ] [  ]' key={key} data-sender={msg?.sender_id}>
 				<div className={`chat__message [ flex flex-col ] [ bg-pink-200 ${placementStype} ]`}>
 					<div className='message_text p-2 '>{msg?.message ?? 'Error: no msg'}</div>
 					<span className='message_sender bg-pink-300 text-xs p-2 pt-0'>{msg?.sendername ?? 'No sender'}</span>
@@ -120,7 +117,7 @@ function ChatDetails() {
 			fetchMessages(roomID);
 			setMsgText('');
 		} catch (error) {
-			alert('Error: sending new message');
+			throw Error('Error: sending new message');
 		}
 	};
 

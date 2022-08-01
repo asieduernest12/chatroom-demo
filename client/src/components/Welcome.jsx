@@ -22,15 +22,16 @@ function Welcome() {
 
 	return (
 		<div className='welcome [ flex flex-col ] [ bg-orange-300 w-[70%] m-auto h-full p-5 ]'>
-			<div> Welcome home</div>
+			<div> Welcome</div>
 			{!host?.username.length && (
 				<form action='' onSubmit={handleUpdateHost} className=' [ flex flex-col ] [ ]'>
-					<ol start='1'>
-						<h1>Register</h1>
+					<ol start={1}>
+						<h1 className="bold text-2xl">Register</h1>
+						<p>a username to proceed</p>
 						<li>
 							<div className='form_group [ flex ]  '>
 								<label htmlFor='host_name' className=' [ flex ] [ w-full ]'>
-									<span>Sender name</span>
+									<span>Username</span>
 									<input
 										type='text'
 										id='host_name'
