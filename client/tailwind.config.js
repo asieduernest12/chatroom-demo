@@ -3,7 +3,7 @@ module.exports = {
 	mode: 'jit',
 	purge: {
 		content: ['./src/**/*.html', './src/**/*.jsx', './src/**/*.js'],
-		options: { whitelistPatterns: [/^bg-/, /^overflow/] },
+		options: { whitelistPatterns: [/^bg-/, /^overflow-/] },
 	},
 	theme: {
 		extend: {},

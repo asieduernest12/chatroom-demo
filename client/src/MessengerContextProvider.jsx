@@ -1,9 +1,9 @@
 import React, { createContext, useMemo, useState } from 'react';
 import reactProptypes from 'react-proptypes';
 
-export const MessengerContext = /** @type {MessengerContextValue & import("react").Context}  */ (createContext({}));
+export  const MessengerContext = /** @type {MessengerContextValue & import("react").Context}  */ (createContext({}));
 
-export function MessengerContextProvider({ children }) {
+export default function MessengerContextProvider({ children }) {
 	const [state, setState] = useState(/** @type {MessengerState} */ ({}));
 
 	const updateStore = (/** @type {string} */ key, /** @type {{}} */ value) => {
