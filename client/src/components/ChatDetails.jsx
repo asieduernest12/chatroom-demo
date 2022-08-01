@@ -11,7 +11,6 @@ function ChatDetails() {
 
 	const navigate = useNavigate();
 
-
 	const host = contextState?.host;
 
 	const [messages, setMessages] = useState(null);
@@ -24,7 +23,7 @@ function ChatDetails() {
 	const [members, setMembers] = useState([]);
 
 	const fetchMessages = async (_roomID = roomID) => {
- 		const res = await axios.get(`${process.env.REACT_APP_API}/api/messages/room/${_roomID}`).then((_res) => _res.data);
+		const res = await axios.get(`${process.env.REACT_APP_API ?? ''}/api/messages/room/${_roomID}`).then((_res) => _res.data);
 		const docs = (res?.rows ?? []).map(({ doc }) => doc);
 		setMessages(docs);
 	};
@@ -45,7 +44,6 @@ function ChatDetails() {
 
 		if (!roomID) return;
 
- 
 		fetchMessages(roomID);
 
 		const fetchMessagesInterval = setInterval(async () => {
@@ -58,8 +56,8 @@ function ChatDetails() {
 		}, MESSAGE_INTERVAL_TIME);
 
 		// eslint-disable-next-line consistent-return
-		return function cleanUp () {
- 			clearInterval(fetchMessagesInterval);
+		return function cleanUp() {
+			clearInterval(fetchMessagesInterval);
 		};
 	}, [roomID]);
 
@@ -113,7 +111,7 @@ function ChatDetails() {
 				sendername: host?.username,
 			};
 
-			await axios.post(`${process.env.REACT_APP_API}/api/messages`, { new_message: newMessage });
+			await axios.post(`${process.env.REACT_APP_API ?? ''}/api/messages`, { new_message: newMessage });
 			fetchMessages(roomID);
 			setMsgText('');
 		} catch (error) {
