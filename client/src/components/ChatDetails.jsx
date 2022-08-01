@@ -129,7 +129,7 @@ function ChatDetails() {
 			<form className='chats [ flex flex-col gap-3 ] [ h-full p-3 w-2/3 ]' onSubmit={sendMessageHandler}>
 				<div className='chats__header w-full h-[5%] '>Messages {messages?.length ?? 0}</div>
 
-				<div className='chats__messages [ flex flex-col gap-3 ] [ h-[85%] overflow-auto ]'>{showMessages(messages)}</div>
+				<div className='chats__messages [ flex flex-col gap-3 ] [ h-[80%] overflow-auto mt-auto ]'>{showMessages(messages)}</div>
 
 				<div className='chats__footer [ flex mt-auto ] [ h-[45px] ]'>
 					<input

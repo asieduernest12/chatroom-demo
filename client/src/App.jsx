@@ -16,7 +16,7 @@ function App() {
 	const setNavClassName = ({ isActive }) => `nav_link_item nav_home p-3 ${isActive && 'bg-blue-500'}`;
 	return (
 		<div className='flex flex-col h-screen'>
-			<div className='bg-blue-500 text-white shadow-md flex-col'>
+			<div className='bg-blue-500 text-white shadow-md flex-col [ h-[15%] w-full ]'>
 				<div className='title__bar flex justify-end p-3 pl-8'>
 					<Link to='/' replace className='back_btn [ flex ] [ rounded-full hover:bg-green-500 ]' type='button'>
 						<svg xmlns='http://www.w3.org/2000/svg' className='[ h-5 w-5 m-auto ]' viewBox='0 0 20 20' fill='currentColor'>
@@ -53,7 +53,7 @@ function App() {
 					</ul>
 				</nav>
 			</div>
-			<div className='app_content h-full bg-orange-200'>
+			<div className='app_content [  ] [ h-full overflow-hidden bg-orange-200 w-full ]'>
 				<Routes>
 					<Route path='/home' element={<Welcome />} />
 					<Route path='/about' element={<About />} />
