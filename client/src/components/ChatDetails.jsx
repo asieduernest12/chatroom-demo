@@ -25,7 +25,7 @@ function ChatDetails() {
 
 	const fetchMessages = async (_roomID = roomID) => {
 		console.log('fetching messages for room: ', _roomID);
-		const res = await axios.get(`api/messages/room/${_roomID}`).then((_res) => _res.data);
+		const res = await axios.get(`${process.env.REACT_APP_PROXY}/api/messages/room/${_roomID}`).then((_res) => _res.data);
 		const docs = (res?.rows ?? []).map(({ doc }) => doc);
 		setMessages(docs);
 	};
@@ -116,7 +116,7 @@ function ChatDetails() {
 				sendername: host?.username,
 			};
 
-			await axios.post('/api/messages', { new_message: newMessage });
+			await axios.post(`${process.env.REACT_APP_PROXY}/api/messages`, { new_message: newMessage });
 			fetchMessages(roomID);
 			setMsgText('');
 		} catch (error) {
