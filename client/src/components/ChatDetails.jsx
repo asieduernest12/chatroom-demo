@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { MessengerContext } from '../MessengerContextProvider';
 
 function ChatDetails() {
-	const MESSAGE_INTERVAL_TIME = 15_000;
+	const MESSAGE_INTERVAL_TIME = 10_000;
 
 	/** @type {MessengerContextValue} */
 	const { contextState } = useContext(MessengerContext);
@@ -105,8 +105,10 @@ function ChatDetails() {
 
 	const showMessages = (msgs) => msgs && msgs.map(msgToHtml);
 
-	const sendMessage = async () => {
+	const sendMessageHandler = async (event) => {
 		try {
+			event.preventDefault();
+
 			const newMessage = {
 				message: msgText,
 				sender_id: '',
@@ -124,7 +126,7 @@ function ChatDetails() {
 
 	return (
 		<div className='chat-details [ flex ] [ w-full h-full ]'>
-			<div className='chats [ flex flex-col gap-3 ] [ h-full p-3 w-2/3 ]'>
+			<form className='chats [ flex flex-col gap-3 ] [ h-full p-3 w-2/3 ]' onSubmit={sendMessageHandler}>
 				<div className='chats__header w-full h-[5%] '>Messages {messages?.length ?? 0}</div>
 
 				<div className='chats__messages [ flex flex-col gap-3 ] [ h-[85%] overflow-auto ]'>{showMessages(messages)}</div>
@@ -137,11 +139,11 @@ function ChatDetails() {
 						onChange={(event) => setMsgText(event.target.value)}
 						value={msgText}
 					/>
-					<button className='chats__send_btn [ bg-blue-400 p-3 w-1/4 ]' onClick={sendMessage} type='button'>
+					<button className='chats__send_btn [ bg-blue-400 p-3 w-1/4 ]' type='submit'>
 						Send {guest?.username}
 					</button>
 				</div>
-			</div>
+			</form>
 
 			<div className='contacts__content [ flex-col gap-3 ] [ w-1/3 bg-blue-400 p-2 ]'>
 				<h2 className='mb-3 mt-6'>Members Online</h2>

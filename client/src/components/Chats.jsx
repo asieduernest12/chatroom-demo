@@ -18,7 +18,7 @@ function Chats() {
 	}, []);
 
 	return (
-		<div className='chats-page [ flex flex-row ] [ w-full h-full  md:px-[30rem] ]'>
+		<div className='chats-page [ flex flex-row ] [ w-full h-full  lg:px-[30rem] ]'>
 			<div className='chat-rooms [ flex flex-col gap-5 ] [ w-1/4 p-5 bg-orange-500 ] '>
 				<h2>Chat rooms</h2>
 
