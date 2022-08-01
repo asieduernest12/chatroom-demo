@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const allowlist = JSON.parse(process.env.ALLOWED_ORIGINS);
+const allowlist = ["",process.env.ALLOWED_ORIGINS].join('').split('::');
 console.log(allowlist)
 if (!Array.isArray(allowlist)) throw new Error('Invalid allowed list')
 
