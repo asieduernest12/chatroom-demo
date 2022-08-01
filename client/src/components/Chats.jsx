@@ -6,13 +6,12 @@ function Chats() {
 	const [rooms, setRooms] = useState(null);
 
 	const fetchRooms = async () => {
-		const res = await axios.get('/api/rooms').then((_res) => _res.data);
+		const res = await axios.get(`${process.env.REACT_APP_API  }/api/rooms`).then((_res) => _res.data);
 		console.log(res);
 		setRooms(res.rows.map(({ doc }) => doc));
 	};
 
-
-	const makeChatNameClassName = ({isActive}) => `chat_room_item_link [  ] [ p-3  ${isActive ? 'bg-orange-200': 'bg-blue-100'} ]`
+	const makeChatNameClassName = ({ isActive }) => `chat_room_item_link [  ] [ p-3  ${isActive ? 'bg-orange-200' : 'bg-blue-100'} ]`;
 	useEffect(() => {
 		fetchRooms();
 	}, []);
@@ -31,7 +30,7 @@ function Chats() {
 			</div>
 
 			<div className='chat_details_container [  ] [ w-3/4 bg-orange-300 ]'>
-				<Outlet/>
+				<Outlet />
 			</div>
 		</div>
 	);
